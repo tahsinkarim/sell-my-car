@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import toast from "react-hot-toast";
 import { useLoaderData } from "react-router-dom";
 import Modal from "../Shared/Modal/Modal";
 import CategoryPageCard from "./CategoryPageCard";
@@ -11,11 +10,6 @@ const CategoriesPage = () => {
     setSelectedCar(null);
   };
 
-  const handleConfirmation = (data) => {
-    console.log(data);
-    toast.success("Booking Submitted");
-    setSelectedCar(null);
-  };
   return (
     <div className='max-w-7xl mx-auto px-8'>
       <div>
@@ -29,9 +23,9 @@ const CategoriesPage = () => {
       </div>
       {selectedCar && (
         <Modal
-          handleConfirmation={handleConfirmation}
           closeModal={closeModal}
           selectedCar={selectedCar}
+          setSelectedCar={setSelectedCar}
         ></Modal>
       )}
     </div>

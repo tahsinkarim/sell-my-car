@@ -1,20 +1,37 @@
-import React, { useContext, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
-const Modal = ({ selectedCar, closeModal, handleConfirmation }) => {
+const Modal = ({ selectedCar, closeModal, setSelectedCar }) => {
   const { name: carName, resalePrice } = selectedCar;
   const { user } = useContext(AuthContext);
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-    reset,
-  } = useForm();
 
-  useEffect(() => {
-    reset(selectedCar, user);
-  }, [user, selectedCar]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      carName: form.carName.value,
+      price: form.price.value,
+      phoneNumber: form.phoneNumber.value,
+      meetingLocation: form.meetingLocation.value,
+    };
+    fetch("http://localhost:5000/orders", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Booking Submitted");
+          setSelectedCar(null);
+        }
+      });
+  };
 
   return (
     <>
@@ -31,13 +48,10 @@ const Modal = ({ selectedCar, closeModal, handleConfirmation }) => {
           <h3 className='text-lg font-bold mb-2 text-center'>
             Confirm Your Booking
           </h3>
-          <form
-            onSubmit={handleSubmit(handleConfirmation)}
-            className='flex flex-col gap-4'
-          >
+          <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
             <input
               className='input input-bordered h-auto py-2 w-full rounded'
-              {...register("displayName")}
+              name='name'
               type='text'
               defaultValue={user.displayName}
               disabled
@@ -45,7 +59,7 @@ const Modal = ({ selectedCar, closeModal, handleConfirmation }) => {
             />
             <input
               className='input input-bordered h-auto py-2 w-full rounded'
-              {...register("email")}
+              name='email'
               type='text'
               defaultValue={user.email}
               disabled
@@ -53,7 +67,7 @@ const Modal = ({ selectedCar, closeModal, handleConfirmation }) => {
             />
             <input
               className='input input-bordered h-auto py-2 w-full rounded'
-              {...register("carName")}
+              name='carName'
               type='text'
               defaultValue={carName}
               disabled
@@ -61,7 +75,7 @@ const Modal = ({ selectedCar, closeModal, handleConfirmation }) => {
             />
             <input
               className='input input-bordered h-auto py-2 w-full rounded'
-              {...register("price")}
+              name='price'
               type='text'
               defaultValue={resalePrice}
               disabled
@@ -69,14 +83,14 @@ const Modal = ({ selectedCar, closeModal, handleConfirmation }) => {
             />
             <input
               className='input input-bordered h-auto py-2 w-full rounded'
-              {...register("phoneNumber")}
+              name='phoneNumber'
               placeholder='Phone Number'
               type='text'
               required
             />
             <input
               className='input input-bordered h-auto py-2 w-full rounded'
-              {...register("meetingLocation")}
+              name='meetingLocation'
               placeholder='Meeting Location'
               type='text'
               required

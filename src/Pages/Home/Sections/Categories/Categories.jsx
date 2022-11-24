@@ -3,7 +3,7 @@ import React from "react";
 import CategoryCard from "./CategoryCard";
 
 const Categories = () => {
-  const { data: categoryCars = [], refetch } = useQuery({
+  const { data: categoryCars = [] } = useQuery({
     queryKey: ["categoryCars"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/category");
