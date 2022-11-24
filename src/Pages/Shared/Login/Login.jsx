@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Login = () => {
@@ -12,7 +12,10 @@ const Login = () => {
   const { logIn } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const [data, setData] = useState("");
+  //Redirect location
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleRegister = (data) => {
     console.log(data);
@@ -20,7 +23,7 @@ const Login = () => {
     logIn(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        navigate("/");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error.message);
