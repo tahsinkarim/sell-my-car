@@ -1,6 +1,6 @@
 import React from "react";
 
-const CategoryPageCard = ({ car }) => {
+const CategoryPageCard = ({ car, setSelectedCar }) => {
   const {
     name,
     img,
@@ -110,7 +110,13 @@ const CategoryPageCard = ({ car }) => {
           </div>
           <div className='card-actions justify-end flex items-center'>
             <p className='text-sm'> Posted On: {postTime}</p>
-            <button className='btn btn-primary btn-sm'>Book Now</button>
+            <label
+              htmlFor='modalForm'
+              onClick={() => setSelectedCar(car)}
+              className='btn btn-primary btn-sm'
+            >
+              Book Now
+            </label>
           </div>
         </div>
       </div>
