@@ -9,7 +9,6 @@ const CategoriesPage = () => {
   const closeModal = () => {
     setSelectedCar(null);
   };
-  console.log(selectedCar);
   return (
     <div className='max-w-7xl mx-auto px-8'>
       <div>
