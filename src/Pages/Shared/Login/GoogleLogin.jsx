@@ -19,6 +19,11 @@ const GoogleLogin = () => {
     providerLogin(googleProvider)
       .then((res) => {
         const user = res.user;
+        console.log({
+          user: user.displayName,
+          role: "buyer",
+          email: user.email,
+        });
         navigate(from, { replace: true });
       })
       .catch((error) => {

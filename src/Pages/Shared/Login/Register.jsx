@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import GoogleLogin from "./GoogleLogin";
 
@@ -9,17 +10,42 @@ const Register = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const { createUser } = useContext(AuthContext);
+  const { createUser, updateInfo } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const [data, setData] = useState("");
+  const [submitLoading, setSubmitLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleRegister = (data) => {
-    console.log(data);
+    setSubmitLoading(true);
     setLoginError("");
     createUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        updateInfo({ displayName: data.displayName })
+          .then(() => {
+            const userInfo = {
+              user: data.displayName,
+              role: data.role,
+              email: data.email,
+              verified: false,
+            };
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(userInfo),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.acknowledged) {
+                  setSubmitLoading(false);
+                  navigate("/");
+                }
+              });
+          })
+          .catch((error) => console.log(error));
       })
       .catch((error) => {
         console.log(error.message);
@@ -56,6 +82,12 @@ const Register = () => {
           )}
           <input
             className='input input-bordered w-full max-w-xs rounded'
+            {...register("displayName")}
+            placeholder='Name'
+            type='text'
+          />
+          <input
+            className='input input-bordered w-full max-w-xs rounded'
             {...register("email")}
             placeholder='Email'
             type='email'
@@ -66,11 +98,23 @@ const Register = () => {
             placeholder='Password'
             type='password'
           />
-          <input
-            className='btn btn-primary w-full max-w-xs rounded'
-            value='Sign Up'
-            type='submit'
-          />
+          <select {...register("role", { required: true })}>
+            <option value='buyer'>Buyer</option>
+            <option value='seller'>Seller</option>
+          </select>
+          {submitLoading ? (
+            <input
+              className='btn btn-primary w-full max-w-xs rounded'
+              value='Signing Up...'
+              disabled
+            />
+          ) : (
+            <input
+              className='btn btn-primary w-full max-w-xs rounded'
+              value='Sign Up'
+              type='submit'
+            />
+          )}
         </form>
         <GoogleLogin></GoogleLogin>
       </div>
