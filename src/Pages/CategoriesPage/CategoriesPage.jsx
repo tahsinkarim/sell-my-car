@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useLoaderData } from "react-router-dom";
 import Modal from "../Shared/Modal/Modal";
 import CategoryPageCard from "./CategoryPageCard";
@@ -7,6 +8,12 @@ const CategoriesPage = () => {
   const categoryCars = useLoaderData();
   const [selectedCar, setSelectedCar] = useState(null);
   const closeModal = () => {
+    setSelectedCar(null);
+  };
+
+  const handleConfirmation = (data) => {
+    console.log(data);
+    toast.success("Booking Submitted");
     setSelectedCar(null);
   };
   return (
@@ -21,7 +28,11 @@ const CategoriesPage = () => {
         ))}
       </div>
       {selectedCar && (
-        <Modal closeModal={closeModal} selectedCar={selectedCar}></Modal>
+        <Modal
+          handleConfirmation={handleConfirmation}
+          closeModal={closeModal}
+          selectedCar={selectedCar}
+        ></Modal>
       )}
     </div>
   );
