@@ -20,6 +20,8 @@ const AddProduct = () => {
     },
   });
 
+  const navigate = useNavigate();
+
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -85,6 +87,7 @@ const AddProduct = () => {
             .then((result) => {
               console.log(result);
               toast.success(`${name} car is added successfully`);
+              navigate("/dashboard/myProducts");
             });
         }
       });

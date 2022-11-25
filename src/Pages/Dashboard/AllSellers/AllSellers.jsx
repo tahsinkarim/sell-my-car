@@ -5,14 +5,17 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 
 const AllSellers = () => {
   const { user } = useContext(AuthContext);
-  const { data: allSellers = [] } = useQuery({
+  const { data: allSellers = [], isLoading } = useQuery({
     queryKey: [user],
     queryFn: async () => {
       const { data } = await axios.get("http://localhost:5000/users/sellers");
       return data;
     },
   });
-  console.log(allSellers);
+
+  if (isLoading) {
+    return <p>Loading . . .</p>;
+  }
   return (
     <div>
       <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>All Sellers</h2>
