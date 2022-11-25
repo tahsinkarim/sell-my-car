@@ -1,12 +1,20 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import DashboardSideBar from "../Pages/Shared/DashboardSideBar/DashboardSideBar";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 
 const DashboardLayout = () => {
   return (
     <>
       <Navbar></Navbar>
-      <Outlet></Outlet>
+      <div className='drawer-content flex flex-col items-end mr-4 my-4'>
+        <label
+          htmlFor='dashboardSideBar'
+          className='btn btn-primary btn-sm drawer-button lg:hidden'
+        >
+          Dashboard Menu
+        </label>
+      </div>
+      <DashboardSideBar></DashboardSideBar>
     </>
   );
 };

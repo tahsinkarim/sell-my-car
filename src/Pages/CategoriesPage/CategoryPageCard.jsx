@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const CategoryPageCard = ({ car, setSelectedCar }) => {
+  const { user } = useContext(AuthContext);
   const {
     name,
     img,
@@ -12,11 +15,34 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
     sellerName,
     sellerId,
     verifiedSeller,
+    _id,
   } = car;
+  console.log(car);
 
   const priceDivider = (price) => {
     const commas = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return commas;
+  };
+
+  const handleReport = () => {
+    fetch("http://localhost:5000/report", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ carId: _id, user: user.email }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Reported To Admin");
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -30,7 +56,8 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
             <h2 className='card-title text-3xl text-black'>{name}</h2>
             <div
               title='Report to admin'
-              className='text-right flex items-center gap-1 text-xs cursor-pointer hover:text-gray-900'
+              onClick={handleReport}
+              className='text-right flex items-center gap-1 text-xs cursor-pointer hover:text-red-500'
             >
               <p>Report</p>
               <p>
