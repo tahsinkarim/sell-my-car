@@ -25,12 +25,19 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
   };
 
   const handleReport = () => {
-    fetch("http://localhost:5000/report", {
+    const data = {
+      carId: _id,
+      reportedBy: user.email,
+      name,
+      sellerName,
+      sellerId,
+    };
+    fetch("http://localhost:5000/reports", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ carId: _id, user: user.email }),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
