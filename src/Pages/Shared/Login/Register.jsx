@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import GoogleLogin from "./GoogleLogin";
 
@@ -12,9 +12,13 @@ const Register = () => {
   } = useForm();
   const { createUser, updateInfo } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
-  const [data, setData] = useState("");
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
   const [submitLoading, setSubmitLoading] = useState(false);
   const navigate = useNavigate();
+
+  if (createdUserEmail) {
+    navigate("/");
+  }
 
   const handleRegister = (data) => {
     setSubmitLoading(true);
@@ -22,34 +26,38 @@ const Register = () => {
     createUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
+
         updateInfo({ displayName: data.displayName })
           .then(() => {
-            const userInfo = {
-              user: data.displayName,
-              role: data.role,
-              email: data.email,
-              verified: false,
-            };
-            fetch("http://localhost:5000/users", {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify(userInfo),
-            })
-              .then((res) => res.json())
-              .then((data) => {
-                if (data.acknowledged) {
-                  setSubmitLoading(false);
-                  navigate("/");
-                }
-              });
+            saveUser(data.displayName, data.role, data.email);
+            setSubmitLoading(false);
           })
           .catch((error) => console.log(error));
       })
       .catch((error) => {
         console.log(error.message);
         setLoginError(error.message);
+      });
+  };
+
+  const saveUser = (displayName, role, email) => {
+    const userInfo = {
+      user: displayName,
+      role,
+      email,
+      verified: false,
+    };
+
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setCreatedUserEmail(email);
       });
   };
   return (
@@ -116,6 +124,11 @@ const Register = () => {
             />
           )}
         </form>
+        <Link to='/login'>
+          <p className='text-sm mt-1 text-center text-gray-500 font-medium hover:underline'>
+            Already have a account? Log in
+          </p>
+        </Link>
         <GoogleLogin></GoogleLogin>
       </div>
     </div>

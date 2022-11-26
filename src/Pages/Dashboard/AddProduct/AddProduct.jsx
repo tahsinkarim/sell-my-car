@@ -3,6 +3,7 @@ import axios from "axios";
 import { format } from "date-fns";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const AddProduct = () => {
@@ -11,7 +12,7 @@ const AddProduct = () => {
   const { user } = useContext(AuthContext);
   //Get If the seller is verified
   const { data: userData = [], isLoading } = useQuery({
-    queryKey: ["verifiedSeller", user.email],
+    queryKey: ["verifiedSeller"],
     queryFn: async () => {
       const { data } = await axios.get(
         `http://localhost:5000/users?email=${user?.email}`
@@ -32,7 +33,7 @@ const AddProduct = () => {
     e.preventDefault();
     const form = e.target;
 
-    const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`;
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
 
     const sellerEmail = user.email;
     const sellerName = user.displayName;
@@ -93,9 +94,7 @@ const AddProduct = () => {
       });
     form.reset();
   };
-  if (isLoading) {
-    return <p>Loading ... </p>;
-  }
+
   return (
     <div>
       <h1 className='text-center font-semibold text-3xl mb-4'>

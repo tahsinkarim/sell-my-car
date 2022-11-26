@@ -1,18 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 
 const AllBuyers = () => {
   const { user } = useContext(AuthContext);
-  const { data: allBuyers = [] } = useQuery({
+  const [deleteItem, setDeleteItem] = useState();
+  const { data: allBuyers = [], refetch } = useQuery({
     queryKey: [user],
     queryFn: async () => {
       const { data } = await axios.get("http://localhost:5000/users/buyers");
       return data;
     },
   });
-  console.log(allBuyers);
+
+  const handleDelete = (email) => {
+    axios.delete(`http://localhost:5000/users/${email}`).then((data) => {
+      console.log(data);
+      toast.success("Item Deleted");
+      refetch();
+    });
+  };
+
   return (
     <div>
       <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>All Buyers</h2>
@@ -27,19 +38,32 @@ const AllBuyers = () => {
             </tr>
           </thead>
           <tbody>
-            {allBuyers?.map((order, i) => (
-              <tr key={order._id}>
+            {allBuyers?.map((buyer, i) => (
+              <tr key={buyer._id}>
                 <th>{i + 1}</th>
-                <td>{order.user}</td>
-                <td>{order.email}</td>
+                <td>{buyer.user}</td>
+                <td>{buyer.email}</td>
                 <td>
-                  <button className='btn btn-sm btn-error'>Delete</button>
+                  <label
+                    htmlFor='confirmationModal'
+                    onClick={() => setDeleteItem(buyer)}
+                    className='btn btn-sm btn-error'
+                  >
+                    Delete
+                  </label>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {deleteItem && (
+        <ConfirmationModal
+          itemName={deleteItem.email}
+          itemId={deleteItem.email}
+          handleDelete={handleDelete}
+        ></ConfirmationModal>
+      )}
     </div>
   );
 };

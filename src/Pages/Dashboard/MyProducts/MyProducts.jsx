@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
+  const [updateItem, setUpdateItem] = useState({});
   const {
     data: myProducts = [],
     isLoading,
@@ -19,6 +20,8 @@ const MyProducts = () => {
       return data;
     },
   });
+
+  console.log(myProducts);
 
   const switchToUnavailable = (id) => {
     axios
@@ -61,10 +64,24 @@ const MyProducts = () => {
     });
   };
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const resalePrice = form.resalePrice.value;
+    const updatedData = { name, resalePrice };
+    axios
+      .put(`http://localhost:5000/myCars/${updateItem?._id}`, updatedData)
+      .then((data) => {
+        console.log(data);
+        toast.success("Item Updated");
+        refetch();
+      });
+  };
+
   if (isLoading) {
     return <p>Loading . . .</p>;
   }
-  console.log(myProducts);
   return (
     <div>
       <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>All Sellers</h2>
@@ -77,7 +94,7 @@ const MyProducts = () => {
               <th>Price</th>
               <th>Advertise</th>
               <th>Available</th>
-              <th>Remove</th>
+              <th>Update/Remove</th>
             </tr>
           </thead>
           <tbody>
@@ -120,6 +137,13 @@ const MyProducts = () => {
                   )}
                 </td>
                 <td>
+                  <label
+                    htmlFor='updateModal'
+                    className='btn btn-xs btn-warning mr-1'
+                    onClick={() => setUpdateItem(car)}
+                  >
+                    Update
+                  </label>
                   <button
                     onClick={() => handleDelete(car._id)}
                     className='btn btn-xs btn-error'
@@ -131,6 +155,40 @@ const MyProducts = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <input type='checkbox' id='updateModal' className='modal-toggle' />
+      <div className='modal'>
+        <div className='modal-box'>
+          <h3 className='font-bold text-lg'>Update Info About Your Car</h3>
+          <form onSubmit={handleUpdate}>
+            <div className='form-control w-full'>
+              <label className='label label-text font-bold'>Car Model</label>
+              <input
+                type='text'
+                name='name'
+                className='input input-bordered w-full max-w-xs'
+                defaultValue={updateItem.name}
+              />
+            </div>
+            <div className='form-control w-full'>
+              <label className='label label-text font-bold'>Price</label>
+              <input
+                type='text'
+                name='resalePrice'
+                className='input input-bordered w-full max-w-xs'
+                defaultValue={updateItem.resalePrice}
+              />
+            </div>
+            <div className='modal-action'>
+              <label htmlFor='updateModal' className='btn btn-outline btn-sm'>
+                Cancel
+              </label>
+              <button type='submit' className='btn btn-sm'>
+                <label htmlFor='updateModal'>Update</label>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

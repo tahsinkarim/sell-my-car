@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import GoogleLogin from "./GoogleLogin";
 
@@ -77,7 +77,11 @@ const Login = () => {
             value='Log in'
           />
         </form>
-
+        <Link to='/register'>
+          <p className='text-sm mt-1 text-center text-gray-500 font-medium hover:underline'>
+            Already have a account? Sign Up
+          </p>
+        </Link>
         <GoogleLogin></GoogleLogin>
       </div>
     </div>

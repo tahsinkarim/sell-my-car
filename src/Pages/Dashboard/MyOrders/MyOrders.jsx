@@ -38,6 +38,7 @@ const MyOrders = () => {
             <th>Item</th>
             <th>Price</th>
             <th>Location</th>
+            <th>Buy</th>
             <th>Remove</th>
           </tr>
         </thead>
@@ -48,6 +49,9 @@ const MyOrders = () => {
               <td>{order.carName}</td>
               <td>{order.price}</td>
               <td>{order.meetingLocation}</td>
+              <td>
+                <button className='btn btn-sm btn-success'>Buy</button>
+              </td>
               <td>
                 <button
                   onClick={() => handleDelete(order._id)}

@@ -37,7 +37,6 @@ const AuthProvider = ({ children }) => {
 
   //Register name and picture
   const updateInfo = (data) => {
-    setLoading(true);
     return updateProfile(auth.currentUser, data);
   };
 
