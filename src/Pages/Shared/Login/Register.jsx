@@ -16,10 +16,6 @@ const Register = () => {
   const [submitLoading, setSubmitLoading] = useState(false);
   const navigate = useNavigate();
 
-  if (createdUserEmail) {
-    navigate("/");
-  }
-
   const handleRegister = (data) => {
     setSubmitLoading(true);
     setLoginError("");
@@ -48,8 +44,8 @@ const Register = () => {
       verified: false,
     };
 
-    fetch("http://localhost:5000/users", {
-      method: "POST",
+    fetch(`http://localhost:5000/users/${email}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
@@ -58,6 +54,7 @@ const Register = () => {
       .then((res) => res.json())
       .then((data) => {
         setCreatedUserEmail(email);
+        navigate("/");
       });
   };
   return (

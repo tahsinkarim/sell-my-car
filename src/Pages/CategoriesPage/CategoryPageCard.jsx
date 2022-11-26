@@ -14,8 +14,9 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
     postTime,
     sellerName,
     sellerId,
-    verifiedSeller,
+    verified,
     _id,
+    sellerEmail,
   } = car;
   console.log(car);
 
@@ -61,29 +62,31 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
         <div className='card-body gap-0 text-gray-500'>
           <div className='flex items-center justify-between w-full'>
             <h2 className='card-title text-3xl text-black'>{name}</h2>
-            <div
-              title='Report to admin'
-              onClick={handleReport}
-              className='text-right flex items-center gap-1 text-xs cursor-pointer hover:text-red-500'
-            >
-              <p>Report</p>
-              <p>
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth={1.5}
-                  stroke='currentColor'
-                  className='w-5 h-5'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    d='M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z'
-                  />
-                </svg>
-              </p>
-            </div>
+            {user?.email !== sellerEmail && (
+              <div
+                title='Report to admin'
+                onClick={handleReport}
+                className='text-right flex items-center gap-1 text-xs cursor-pointer hover:text-red-500'
+              >
+                <p>Report</p>
+                <p>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    strokeWidth={1.5}
+                    stroke='currentColor'
+                    className='w-5 h-5'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      d='M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z'
+                    />
+                  </svg>
+                </p>
+              </div>
+            )}
           </div>
           <p className='text-sm font-medium flex items-center'>
             <span>
@@ -123,7 +126,7 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
           <div>
             <p className='flex items-center gap-1'>
               <span>By: {sellerName}</span>
-              {verifiedSeller && (
+              {verified && (
                 <span className='text-blue-500'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -144,13 +147,17 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
           </div>
           <div className='card-actions justify-end flex items-center'>
             <p className='text-sm'> Posted On: {postTime}</p>
-            <label
-              htmlFor='modalForm'
-              onClick={() => setSelectedCar(car)}
-              className='btn btn-primary btn-sm'
-            >
-              Book Now
-            </label>
+            {user?.email === sellerEmail ? (
+              <label className='btn btn-sm btn-disabled'>Your Item</label>
+            ) : (
+              <label
+                htmlFor='modalForm'
+                onClick={() => setSelectedCar(car)}
+                className='btn btn-primary btn-sm'
+              >
+                Book Now
+              </label>
+            )}
           </div>
         </div>
       </div>

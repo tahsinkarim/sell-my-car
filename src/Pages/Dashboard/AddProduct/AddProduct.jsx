@@ -20,6 +20,7 @@ const AddProduct = () => {
       return data;
     },
   });
+  console.log(userData);
 
   const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ const AddProduct = () => {
 
     const sellerEmail = user.email;
     const sellerName = user.displayName;
-    const verifiedSeller = userData[0].verified;
+    const verified = userData[0].verified;
     const name = form.name.value;
     const resalePrice = form.price.value;
     const originalPrice = form.originalPrice.value;
@@ -62,7 +63,7 @@ const AddProduct = () => {
           const carData = {
             sellerEmail,
             sellerName,
-            verifiedSeller,
+            verified,
             name,
             resalePrice,
             condition,
@@ -94,6 +95,10 @@ const AddProduct = () => {
       });
     form.reset();
   };
+
+  if (isLoading) {
+    return <p>Loading . . .</p>;
+  }
 
   return (
     <div>
@@ -176,8 +181,8 @@ const AddProduct = () => {
               className='select select-bordered w-full max-w-xs'
             >
               <option value='637f0a24091fa251702fc8d8'>Sedan</option>
-              <option value='637f0a24091fa251702fc8da'>SUVs</option>
-              <option value='637f0a24091fa251702fc8d9'>EVs</option>
+              <option value='637f0a24091fa251702fc8d9'>SUVs</option>
+              <option value='637f0a24091fa251702fc8da'>EVs</option>
             </select>
           </div>
         </div>

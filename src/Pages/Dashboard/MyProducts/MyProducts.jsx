@@ -31,7 +31,7 @@ const MyProducts = () => {
       })
       .then((data) => {
         console.log(data);
-        toast.success("Update Successfully");
+        toast.success("MArked as Sold");
         refetch();
       });
   };
@@ -84,7 +84,7 @@ const MyProducts = () => {
   }
   return (
     <div>
-      <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>All Sellers</h2>
+      <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>My Products</h2>
       <div className='overflow-x-auto'>
         <table className='table w-full'>
           <thead>
@@ -132,25 +132,27 @@ const MyProducts = () => {
                       onClick={() => switchToAvailable(car._id)}
                       className='btn btn-xs btn-ghost'
                     >
-                      Not Available
+                      Sold
                     </button>
                   )}
                 </td>
-                <td>
-                  <label
-                    htmlFor='updateModal'
-                    className='btn btn-xs btn-warning mr-1'
-                    onClick={() => setUpdateItem(car)}
-                  >
-                    Update
-                  </label>
-                  <button
-                    onClick={() => handleDelete(car._id)}
-                    className='btn btn-xs btn-error'
-                  >
-                    Delete
-                  </button>
-                </td>
+                {car.available && (
+                  <td>
+                    <label
+                      htmlFor='updateModal'
+                      className='btn btn-xs btn-warning mr-1'
+                      onClick={() => setUpdateItem(car)}
+                    >
+                      Update
+                    </label>
+                    <button
+                      onClick={() => handleDelete(car._id)}
+                      className='btn btn-xs btn-error'
+                    >
+                      Delete
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

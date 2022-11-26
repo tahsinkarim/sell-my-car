@@ -47,7 +47,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav className='bg-base-100'>
+    <nav className='bg-base-100 shadow'>
       <div className='navbar justify-between max-w-7xl mx-auto'>
         <div className='navbar-start'>
           <Link to='/' className='btn btn-ghost normal-case text-xl'>

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../contexts/AuthProvider";
+import useRole from "../hooks/useRole";
 import DashboardSideBar from "../Pages/Shared/DashboardSideBar/DashboardSideBar";
 import Navbar from "../Pages/Shared/Navbar/Navbar";
 
 const DashboardLayout = () => {
+  const { user } = useContext(AuthContext);
+  const [isRole] = useRole(user?.email);
   return (
     <>
       <Navbar></Navbar>
@@ -14,7 +18,7 @@ const DashboardLayout = () => {
           Dashboard Menu
         </label>
       </div>
-      <DashboardSideBar></DashboardSideBar>
+      <DashboardSideBar isRole={isRole}></DashboardSideBar>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import Modal from "../Shared/Modal/Modal";
 import CategoryPageCard from "./CategoryPageCard";
+import Modal from "./Modal/Modal";
 
 const CategoriesPage = () => {
   const categoryCars = useLoaderData();
@@ -11,7 +11,7 @@ const CategoriesPage = () => {
   };
 
   return (
-    <div className='max-w-7xl mx-auto px-8'>
+    <div className='max-w-7xl mx-auto px-8 my-10'>
       <div>
         {categoryCars.map((car) => (
           <CategoryPageCard

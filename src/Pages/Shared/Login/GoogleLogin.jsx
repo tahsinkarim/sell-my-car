@@ -24,10 +24,33 @@ const GoogleLogin = () => {
           role: "buyer",
           email: user.email,
         });
+        saveUser(user.displayName, "buyer", user.email);
         navigate(from, { replace: true });
       })
       .catch((error) => {
         console.error(error);
+      });
+  };
+
+  const saveUser = (displayName, role, email) => {
+    const userInfo = {
+      user: displayName,
+      role,
+      email,
+      verified: false,
+    };
+
+    fetch(`http://localhost:5000/users/${email}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        navigate(from, { replace: true });
       });
   };
   return (

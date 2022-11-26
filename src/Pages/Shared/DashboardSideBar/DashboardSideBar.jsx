@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
-const DashboardSideBar = () => {
+const DashboardSideBar = ({ isRole }) => {
   return (
     <div className='drawer drawer-mobile'>
       <input id='dashboardSideBar' type='checkbox' className='drawer-toggle' />
@@ -14,21 +14,30 @@ const DashboardSideBar = () => {
           <li>
             <Link to='/dashboard/myOrders'>My Orders</Link>
           </li>
-          <li>
-            <Link to='/dashboard/addProduct'>Add a Product</Link>
-          </li>
-          <li>
-            <Link to='/dashboard/myProducts'>My Products</Link>
-          </li>
-          <li>
-            <Link to='/dashboard/allSellers'>All Sellers</Link>
-          </li>
-          <li>
-            <Link to='/dashboard/allBuyers'>All Buyers</Link>
-          </li>
-          <li>
-            <Link to='/dashboard/reportedItems'>Reported Items</Link>
-          </li>
+          {isRole === "seller" && (
+            <>
+              <li>
+                <Link to='/dashboard/addProduct'>Add a Product</Link>
+              </li>
+              <li>
+                <Link to='/dashboard/myProducts'>My Products</Link>
+              </li>
+            </>
+          )}
+
+          {isRole === "admin" && (
+            <>
+              <li>
+                <Link to='/dashboard/allSellers'>All Sellers</Link>
+              </li>
+              <li>
+                <Link to='/dashboard/allBuyers'>All Buyers</Link>
+              </li>
+              <li>
+                <Link to='/dashboard/reportedItems'>Reported Items</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>
