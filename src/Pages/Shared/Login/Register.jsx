@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import useToken from "../../../hooks/useToken";
 import GoogleLogin from "./GoogleLogin";
 
 const Register = () => {
@@ -13,8 +14,13 @@ const Register = () => {
   const { createUser, updateInfo } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   const [submitLoading, setSubmitLoading] = useState(false);
   const navigate = useNavigate();
+
+  if (token) {
+    return navigate("/");
+  }
 
   const handleRegister = (data) => {
     setSubmitLoading(true);
@@ -28,11 +34,15 @@ const Register = () => {
             saveUser(data.displayName, data.role, data.email);
             setSubmitLoading(false);
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            setSubmitLoading(false);
+            console.log(error);
+          });
       })
       .catch((error) => {
         console.log(error.message);
         setLoginError(error.message);
+        setSubmitLoading(false);
       });
   };
 
@@ -54,9 +64,9 @@ const Register = () => {
       .then((res) => res.json())
       .then((data) => {
         setCreatedUserEmail(email);
-        navigate("/");
       });
   };
+
   return (
     <div className='flex justify-center py-8'>
       <div>
@@ -90,18 +100,21 @@ const Register = () => {
             {...register("displayName")}
             placeholder='Name'
             type='text'
+            required
           />
           <input
             className='input input-bordered w-full max-w-xs rounded'
             {...register("email")}
             placeholder='Email'
             type='email'
+            required
           />
           <input
             className='input input-bordered w-full max-w-xs rounded'
             {...register("password")}
             placeholder='Password'
             type='password'
+            required
           />
           <select {...register("role", { required: true })}>
             <option value='buyer'>Buyer</option>

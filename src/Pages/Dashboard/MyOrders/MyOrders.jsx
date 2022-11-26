@@ -10,7 +10,12 @@ const MyOrders = () => {
     queryKey: [user.email],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/orders?email=${user.email}`
+        `http://localhost:5000/orders?email=${user.email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
       return data;
     },

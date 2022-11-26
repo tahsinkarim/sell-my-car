@@ -11,7 +11,11 @@ const AllBuyers = () => {
   const { data: allBuyers = [], refetch } = useQuery({
     queryKey: [user],
     queryFn: async () => {
-      const { data } = await axios.get("http://localhost:5000/users/buyers");
+      const { data } = await axios.get("http://localhost:5000/users/buyers", {
+        headers: {
+          authorization: `bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
       return data;
     },
   });

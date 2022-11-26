@@ -24,7 +24,6 @@ const DashboardSideBar = ({ isRole }) => {
               </li>
             </>
           )}
-
           {isRole === "admin" && (
             <>
               <li>
