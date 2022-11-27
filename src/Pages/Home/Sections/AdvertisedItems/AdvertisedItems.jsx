@@ -1,8 +1,23 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import React, { useState } from "react";
+import Modal from "../../../CategoriesPage/Modal/Modal";
 import CarCards from "../../../Shared/CarCards/CarCards";
 
 const AdvertisedItems = () => {
-  const advertisedCarData = [1, 2, 3];
+  const [selectedCar, setSelectedCar] = useState(null);
+
+  const { data: advertisedCarData = [] } = useQuery({
+    queryKey: ["advertisedCarData"],
+    queryFn: async () => {
+      const { data } = await axios.get("http://localhost:5000/advertisedCars");
+      return data;
+    },
+  });
+
+  const closeModal = () => {
+    setSelectedCar(null);
+  };
 
   if (advertisedCarData.length < 1) {
     return;
@@ -14,9 +29,20 @@ const AdvertisedItems = () => {
       </h2>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         {advertisedCarData?.map((card, i) => (
-          <CarCards key={i}></CarCards>
+          <CarCards
+            setSelectedCar={setSelectedCar}
+            card={card}
+            key={i}
+          ></CarCards>
         ))}
       </div>
+      {selectedCar && (
+        <Modal
+          closeModal={closeModal}
+          selectedCar={selectedCar}
+          setSelectedCar={setSelectedCar}
+        ></Modal>
+      )}
     </div>
   );
 };
