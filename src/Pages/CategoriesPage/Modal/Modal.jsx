@@ -13,6 +13,7 @@ const Modal = ({ selectedCar, closeModal, setSelectedCar }) => {
       name: form.name.value,
       email: form.email.value,
       carName: form.carName.value,
+      carId: selectedCar?._id,
       price: form.price.value,
       phoneNumber: form.phoneNumber.value,
       meetingLocation: form.meetingLocation.value,

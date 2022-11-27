@@ -19,7 +19,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   if (token) {
-    return navigate("/");
+    navigate("/");
   }
 
   const handleRegister = (data) => {

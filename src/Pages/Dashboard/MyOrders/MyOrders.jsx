@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import Order from "./Order";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
@@ -10,7 +11,7 @@ const MyOrders = () => {
     queryKey: [user.email],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/orders?email=${user.email}`,
+        `http://localhost:5000/orders/?email=${user.email}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -49,23 +50,12 @@ const MyOrders = () => {
         </thead>
         <tbody>
           {myOrders?.map((order, i) => (
-            <tr key={order._id}>
-              <th>{i + 1}</th>
-              <td>{order.carName}</td>
-              <td>{order.price}</td>
-              <td>{order.meetingLocation}</td>
-              <td>
-                <button className='btn btn-sm btn-success'>Buy</button>
-              </td>
-              <td>
-                <button
-                  onClick={() => handleDelete(order._id)}
-                  className='btn btn-sm btn-error'
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
+            <Order
+              key={order._id}
+              order={order}
+              index={i}
+              handleDelete={handleDelete}
+            ></Order>
           ))}
         </tbody>
       </table>

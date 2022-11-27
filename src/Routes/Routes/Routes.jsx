@@ -8,8 +8,10 @@ import AllSellers from "../../Pages/Dashboard/AllSellers/AllSellers";
 import DashboardPage from "../../Pages/Dashboard/DashBoardPage/DashboardPage";
 import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
 import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
 import ReportedItems from "../../Pages/Dashboard/ReportedItems/ReportedItems";
 import Home from "../../Pages/Home/Home/Home";
+import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 import Login from "../../Pages/Shared/Login/Login";
 import Register from "../../Pages/Shared/Login/Register";
 import AdminRoute from "../AdminRoute/AdminRoute";
@@ -19,6 +21,7 @@ const routes = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <DisplayError></DisplayError>,
     children: [
       {
         path: "/",
@@ -51,6 +54,7 @@ const routes = createBrowserRouter([
         <DashboardLayout></DashboardLayout>
       </PrivateRoute>
     ),
+    errorElement: <DisplayError></DisplayError>,
     children: [
       {
         path: "/dashboard",
@@ -91,6 +95,12 @@ const routes = createBrowserRouter([
             <ReportedItems></ReportedItems>
           </AdminRoute>
         ),
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: <Payment></Payment>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/orders/${params.id}`),
       },
     ],
   },

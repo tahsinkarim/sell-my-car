@@ -31,7 +31,7 @@ const MyProducts = () => {
       })
       .then((data) => {
         console.log(data);
-        toast.success("MArked as Sold");
+        toast.success("Marked as Sold");
         refetch();
       });
   };

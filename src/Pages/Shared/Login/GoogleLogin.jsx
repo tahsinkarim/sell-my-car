@@ -18,7 +18,7 @@ const GoogleLogin = () => {
   const navigate = useNavigate();
 
   if (token) {
-    return navigate(from, { replace: true });
+    navigate(from, { replace: true });
   }
 
   //Google log in
@@ -32,7 +32,6 @@ const GoogleLogin = () => {
           email: user.email,
         });
         saveUser(user.displayName, "buyer", user.email);
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.error(error);

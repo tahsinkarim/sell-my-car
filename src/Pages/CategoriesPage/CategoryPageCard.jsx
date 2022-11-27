@@ -18,7 +18,6 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
     _id,
     sellerEmail,
   } = car;
-  console.log(car);
 
   const priceDivider = (price) => {
     const commas = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
