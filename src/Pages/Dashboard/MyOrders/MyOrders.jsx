@@ -57,6 +57,9 @@ const MyOrders = () => {
 
   return (
     <div className='overflow-x-auto max-w-6xl mx-auto'>
+      <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2 text-center'>
+        My Orders
+      </h2>
       <table className='table w-full'>
         <thead>
           <tr>

@@ -26,7 +26,9 @@ const ReportedItems = () => {
   };
   return (
     <div className='max-w-6xl mx-auto'>
-      <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>Reported Items</h2>
+      <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2 text-center'>
+        Reported Items
+      </h2>
       <div className='overflow-x-auto'>
         <table className='table w-full'>
           <thead>

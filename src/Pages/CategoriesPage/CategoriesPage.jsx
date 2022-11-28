@@ -24,6 +24,9 @@ const CategoriesPage = () => {
   if (isLoading) {
     return (
       <div className='flex justify-center items-center min-h-[70vh]'>
+        <Helmet>
+          <title>Categories</title>
+        </Helmet>
         <Audio
           height='80'
           width='80'

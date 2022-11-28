@@ -12,28 +12,58 @@ const DashboardSideBar = ({ isRole }) => {
         <label htmlFor='dashboardSideBar' className='drawer-overlay'></label>
         <ul className='menu p-4 w-80 bg-gray-800 text-white font-bold'>
           <li>
-            <Link to='/dashboard/myOrders'>My Orders</Link>
+            <Link
+              className='btn btn-primary mb-2 rounded-lg'
+              to='/dashboard/myOrders'
+            >
+              My Orders
+            </Link>
           </li>
           {isRole === "seller" && (
             <>
               <li>
-                <Link to='/dashboard/addProduct'>Add a Product</Link>
+                <Link
+                  className='btn btn-primary mb-2 rounded-lg'
+                  to='/dashboard/addProduct'
+                >
+                  Add a Product
+                </Link>
               </li>
               <li>
-                <Link to='/dashboard/myProducts'>My Products</Link>
+                <Link
+                  className='btn btn-primary mb-2 rounded-lg'
+                  to='/dashboard/myProducts'
+                >
+                  My Products
+                </Link>
               </li>
             </>
           )}
           {isRole === "admin" && (
             <>
               <li>
-                <Link to='/dashboard/allSellers'>All Sellers</Link>
+                <Link
+                  className='btn btn-primary mb-2 rounded-lg'
+                  to='/dashboard/allSellers'
+                >
+                  All Sellers
+                </Link>
               </li>
               <li>
-                <Link to='/dashboard/allBuyers'>All Buyers</Link>
+                <Link
+                  className='btn btn-primary mb-2 rounded-lg'
+                  to='/dashboard/allBuyers'
+                >
+                  All Buyers
+                </Link>
               </li>
               <li>
-                <Link to='/dashboard/reportedItems'>Reported Items</Link>
+                <Link
+                  className='btn btn-primary mb-2 rounded-lg'
+                  to='/dashboard/reportedItems'
+                >
+                  Reported Items
+                </Link>
               </li>
             </>
           )}

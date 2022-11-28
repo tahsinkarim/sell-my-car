@@ -1,6 +1,7 @@
+import Lottie from "lottie-react";
 import React, { useContext } from "react";
 import { Link, useRouteError } from "react-router-dom";
-import img from "../../../assets/images/errorElement.jpg";
+import erroranim from "../../../assets/images/erroranim.json";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const DisplayError = () => {
@@ -40,7 +41,7 @@ const DisplayError = () => {
           </div>
         </div>
         <div className='flex justify-center'>
-          <img className='md:w-2/3' src={img} alt='' />
+          <Lottie animationData={erroranim} loop={true} />
         </div>
         <div className='flex flex-col items-center'>
           <h3>

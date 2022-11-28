@@ -1,7 +1,8 @@
+import Lottie from "lottie-react";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import loginImg from "../../../assets/images/login.jpg";
+import loginAnim from "../../../assets/images/login.json";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import useToken from "../../../hooks/useToken";
 import GoogleLogin from "./GoogleLogin";
@@ -42,8 +43,8 @@ const Login = () => {
 
   return (
     <div className='flex justify-center max-w-7xl mx-auto min-h-[70vh] mt-1 px-4'>
-      <div className='hidden sm:flex sm:w-1/2 justify-center'>
-        <img className='w-full object-contain' src={loginImg} alt='' />
+      <div className='hidden sm:flex sm:w-1/2 justify-center p-8'>
+        <Lottie animationData={loginAnim} loop={true} />
       </div>
       <div className='w-full py-10 sm:py-0 sm:w-1/2 flex flex-col justify-center items-center'>
         <h2 className='text-3xl mb-8 font-bold'>Welcome Back!</h2>

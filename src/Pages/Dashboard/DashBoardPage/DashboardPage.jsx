@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
+import Helmet from "react-helmet";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const DashboardPage = () => {
   const { user } = useContext(AuthContext);
   return (
     <div>
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <h1 className='text-3xl'>
         Welcome to your Dashboard {user?.displayName}
       </h1>

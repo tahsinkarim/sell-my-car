@@ -1,7 +1,8 @@
+import Lottie from "lottie-react";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import regImg from "../../../assets/images/register.jpg";
+import loginAnim from "../../../assets/images/login.json";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import useToken from "../../../hooks/useToken";
 import GoogleLogin from "./GoogleLogin";
@@ -143,7 +144,7 @@ const Register = () => {
         <GoogleLogin></GoogleLogin>
       </div>
       <div className='hidden sm:flex sm:w-1/2 justify-center'>
-        <img className='w-full object-contain' src={regImg} alt='' />
+        <Lottie animationData={loginAnim} loop={true} />
       </div>
     </div>
   );

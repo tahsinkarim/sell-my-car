@@ -1,8 +1,12 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 const Blog = () => {
   return (
     <div className='min-h-[70vh]'>
+      <Helmet>
+        <title>Blogs</title>
+      </Helmet>
       <div className='max-w-5xl mx-auto px-4 sm:px-8 py-10'>
         <h1 className='text-3xl text-center my-5'>My Blogs</h1>
         <div
