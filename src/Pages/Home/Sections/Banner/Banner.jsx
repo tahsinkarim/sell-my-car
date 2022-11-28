@@ -19,7 +19,7 @@ const Banner = () => {
     autoplaySpeed: 3000,
   };
   return (
-    <div className='relative max-w-7xl mx-auto'>
+    <div className='relative max-w-7xl mx-auto overflow-x-hidden overflow-y-hidden'>
       <Slider {...settings}>
         <div>
           <div className='filter brightness-50'>
@@ -42,7 +42,7 @@ const Banner = () => {
           </div>
         </div>
       </Slider>
-      <div className='pl-4 sm:text-center absolute bottom-0 top-0 right-0 left-0 text-white flex flex-col justify-center'>
+      <div className='px-4 sm:text-center absolute bottom-0 top-0 right-0 left-0 text-white flex flex-col justify-center'>
         <h1 className='text-3xl md:text-5xl font-bold'>
           Shop SMART Drive Happy
         </h1>
