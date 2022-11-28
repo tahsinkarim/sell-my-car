@@ -20,11 +20,6 @@ const Navbar = () => {
         </Link>
       </li>
       <li>
-        <Link className='rounded' to='/'>
-          All Cars
-        </Link>
-      </li>
-      <li>
         <Link className='rounded' to='/blog'>
           Blog
         </Link>

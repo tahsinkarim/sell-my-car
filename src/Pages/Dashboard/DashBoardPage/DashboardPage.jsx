@@ -13,6 +13,17 @@ const DashboardPage = () => {
         <p>Name: {user.displayName}</p>
         <p>Email: {user.email}</p>
       </div>
+      <div>
+        <p>
+          View your dashboard pages in
+          <label
+            className='hover:underline text-primary ml-1'
+            htmlFor='dashboardSideBar'
+          >
+            dashboard menu.
+          </label>
+        </p>
+      </div>
     </div>
   );
 };

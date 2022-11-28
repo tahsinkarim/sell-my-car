@@ -25,7 +25,7 @@ const AdvertisedItems = () => {
     return;
   }
   return (
-    <div className='pt-20'>
+    <div className='pt-28'>
       <h2 className='text-center text-3xl lg:text-4xl font-semibold mb-8'>
         Advertised Items
       </h2>
