@@ -3,6 +3,7 @@ import axios from "axios";
 import { format } from "date-fns";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { Audio } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
@@ -15,7 +16,7 @@ const AddProduct = () => {
     queryKey: ["verifiedSeller"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/users?email=${user?.email}`
+        `https://sell-my-car-server.vercel.app/users?email=${user?.email}`
       );
       return data;
     },
@@ -78,10 +79,11 @@ const AddProduct = () => {
             originalPrice,
           };
 
-          fetch("http://localhost:5000/availableCars", {
+          fetch("https://sell-my-car-server.vercel.app/availableCars", {
             method: "POST",
             headers: {
               "content-type": "application/json",
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
             },
             body: JSON.stringify(carData),
           })
@@ -97,7 +99,19 @@ const AddProduct = () => {
   };
 
   if (isLoading) {
-    return <p>Loading . . .</p>;
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <Audio
+          height='80'
+          width='80'
+          radius='9'
+          color='purple'
+          ariaLabel='three-dots-loading'
+          wrapperStyle
+          wrapperClass
+        />
+      </div>
+    );
   }
 
   return (

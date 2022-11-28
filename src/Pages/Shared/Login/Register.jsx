@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import regImg from "../../../assets/images/register.jpg";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import useToken from "../../../hooks/useToken";
 import GoogleLogin from "./GoogleLogin";
@@ -54,7 +55,7 @@ const Register = () => {
       verified: false,
     };
 
-    fetch(`http://localhost:5000/users/${email}`, {
+    fetch(`https://sell-my-car-server.vercel.app/users/${email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -68,13 +69,13 @@ const Register = () => {
   };
 
   return (
-    <div className='flex justify-center py-8'>
-      <div>
+    <div className='flex justify-center max-w-7xl mx-auto min-h-[70vh] mt-1 px-4'>
+      <div className='w-full py-10 sm:py-0 sm:w-1/2 flex flex-col justify-center items-center'>
+        <h2 className='text-3xl mb-8 font-bold'>Welcome !</h2>
         <form
           onSubmit={handleSubmit(handleRegister)}
-          className='flex flex-col gap-4'
+          className='flex flex-col gap-4 w-full items-center'
         >
-          <h2 className='text-center text-2xl font-semibold'>Sign Up</h2>
           {loginError && (
             <div className='alert alert-error shadow-lg rounded py-2'>
               <div>
@@ -140,6 +141,9 @@ const Register = () => {
           </p>
         </Link>
         <GoogleLogin></GoogleLogin>
+      </div>
+      <div className='hidden sm:flex sm:w-1/2 justify-center'>
+        <img className='w-full object-contain' src={regImg} alt='' />
       </div>
     </div>
   );

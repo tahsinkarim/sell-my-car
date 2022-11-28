@@ -10,7 +10,7 @@ const Payment = () => {
   const order = useLoaderData();
   const { carId, carName, email, price } = order;
   return (
-    <div>
+    <div className='wax-w-4xl mx-auto'>
       <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>
         Payment for {order.carName}
       </h2>

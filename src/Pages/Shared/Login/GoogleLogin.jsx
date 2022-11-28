@@ -46,7 +46,7 @@ const GoogleLogin = () => {
       verified: false,
     };
 
-    fetch(`http://localhost:5000/users/${email}`, {
+    fetch(`https://sell-my-car-server.vercel.app/users/${email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -59,11 +59,11 @@ const GoogleLogin = () => {
       });
   };
   return (
-    <div>
+    <div className='w-full max-w-xs'>
       <div className='divider'></div>
       <button
         onClick={handleGoogleLogin}
-        className='btn border-none bg-blue-500 w-full max-w-xs rounded'
+        className='btn border-none bg-blue-500 hover:bg-blue-600 w-full max-w-xs rounded'
       >
         Continue with Google
       </button>

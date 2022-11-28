@@ -10,7 +10,9 @@ const AdvertisedItems = () => {
   const { data: advertisedCarData = [] } = useQuery({
     queryKey: ["advertisedCarData"],
     queryFn: async () => {
-      const { data } = await axios.get("http://localhost:5000/advertisedCars");
+      const { data } = await axios.get(
+        "https://sell-my-car-server.vercel.app/advertisedCars"
+      );
       return data;
     },
   });

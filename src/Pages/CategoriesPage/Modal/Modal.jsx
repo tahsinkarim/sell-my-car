@@ -3,8 +3,10 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Modal = ({ selectedCar, closeModal, setSelectedCar }) => {
-  const { name: carName, resalePrice } = selectedCar;
+  const { name: carName, resalePrice, img } = selectedCar;
   const { user } = useContext(AuthContext);
+
+  console.log(selectedCar);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,12 +15,13 @@ const Modal = ({ selectedCar, closeModal, setSelectedCar }) => {
       name: form.name.value,
       email: form.email.value,
       carName: form.carName.value,
+      img,
       carId: selectedCar?._id,
       price: form.price.value,
       phoneNumber: form.phoneNumber.value,
       meetingLocation: form.meetingLocation.value,
     };
-    fetch("http://localhost:5000/orders", {
+    fetch("https://sell-my-car-server.vercel.app/orders", {
       method: "POST",
       headers: {
         "content-type": "application/json",

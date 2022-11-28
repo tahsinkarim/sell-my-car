@@ -32,7 +32,7 @@ const CategoryPageCard = ({ car, setSelectedCar }) => {
       sellerName,
       sellerId,
     };
-    fetch("http://localhost:5000/reports", {
+    fetch("https://sell-my-car-server.vercel.app/reports", {
       method: "POST",
       headers: {
         "content-type": "application/json",

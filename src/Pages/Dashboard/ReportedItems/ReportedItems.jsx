@@ -8,30 +8,34 @@ const ReportedItems = () => {
   const { data: reportedItems = [], refetch } = useQuery({
     queryKey: ["reportedItems"],
     queryFn: async () => {
-      const { data } = await axios.get("http://localhost:5000/reports");
+      const { data } = await axios.get(
+        "https://sell-my-car-server.vercel.app/reports"
+      );
       return data;
     },
   });
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/reports/${id}`).then((data) => {
-      console.log(data);
-      toast.success("Item Deleted");
-      refetch();
-    });
+    axios
+      .delete(`https://sell-my-car-server.vercel.app/reports/${id}`)
+      .then((data) => {
+        console.log(data);
+        toast.success("Item Deleted");
+        refetch();
+      });
   };
   return (
-    <div>
+    <div className='max-w-6xl mx-auto'>
       <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>Reported Items</h2>
       <div className='overflow-x-auto'>
         <table className='table w-full'>
           <thead>
             <tr>
-              <th></th>
-              <th>Reported By</th>
-              <th>Item</th>
-              <th>Seller</th>
-              <th>Delete Item</th>
+              <th className='bg-gray-700 text-white'></th>
+              <th className='bg-gray-700 text-white'>Reported By</th>
+              <th className='bg-gray-700 text-white'>Item</th>
+              <th className='bg-gray-700 text-white'>Seller</th>
+              <th className='bg-gray-700 text-white'>Delete Item</th>
             </tr>
           </thead>
           <tbody>

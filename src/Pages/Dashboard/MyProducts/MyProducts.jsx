@@ -15,7 +15,7 @@ const MyProducts = () => {
     queryKey: ["myProducts", user],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/myCars?email=${user?.email}`
+        `https://sell-my-car-server.vercel.app/myCars?email=${user?.email}`
       );
       return data;
     },
@@ -25,7 +25,7 @@ const MyProducts = () => {
 
   const switchToUnavailable = (id) => {
     axios
-      .put(`http://localhost:5000/myCars/${id}`, {
+      .put(`https://sell-my-car-server.vercel.app/myCars/${id}`, {
         available: false,
         advertise: false,
       })
@@ -38,7 +38,9 @@ const MyProducts = () => {
 
   const switchToAvailable = (id) => {
     axios
-      .put(`http://localhost:5000/myCars/${id}`, { available: true })
+      .put(`https://sell-my-car-server.vercel.app/myCars/${id}`, {
+        available: true,
+      })
       .then((data) => {
         console.log(data);
         toast.success("Update Successfully");
@@ -48,7 +50,9 @@ const MyProducts = () => {
 
   const handleAdvertise = (id) => {
     axios
-      .put(`http://localhost:5000/myCars/${id}`, { advertise: true })
+      .put(`https://sell-my-car-server.vercel.app/myCars/${id}`, {
+        advertise: true,
+      })
       .then((data) => {
         console.log(data);
         toast.success("Item Advertised");
@@ -57,11 +61,13 @@ const MyProducts = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/myCars/${id}`).then((data) => {
-      console.log(data);
-      toast.success("Item Deleted");
-      refetch();
-    });
+    axios
+      .delete(`https://sell-my-car-server.vercel.app/myCars/${id}`)
+      .then((data) => {
+        console.log(data);
+        toast.success("Item Deleted");
+        refetch();
+      });
   };
 
   const handleUpdate = (e) => {
@@ -71,7 +77,10 @@ const MyProducts = () => {
     const resalePrice = form.resalePrice.value;
     const updatedData = { name, resalePrice };
     axios
-      .put(`http://localhost:5000/myCars/${updateItem?._id}`, updatedData)
+      .put(
+        `https://sell-my-car-server.vercel.app/myCars/${updateItem?._id}`,
+        updatedData
+      )
       .then((data) => {
         console.log(data);
         toast.success("Item Updated");
@@ -83,18 +92,18 @@ const MyProducts = () => {
     return <p>Loading . . .</p>;
   }
   return (
-    <div>
+    <div className='max-w-6xl mx-auto'>
       <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>My Products</h2>
       <div className='overflow-x-auto'>
         <table className='table w-full'>
           <thead>
             <tr>
-              <th></th>
-              <th>Car Model</th>
-              <th>Price</th>
-              <th>Advertise</th>
-              <th>Available</th>
-              <th>Update/Remove</th>
+              <th className='bg-gray-700 text-white'></th>
+              <th className='bg-gray-700 text-white'>Car Model</th>
+              <th className='bg-gray-700 text-white'>Price</th>
+              <th className='bg-gray-700 text-white'>Advertise</th>
+              <th className='bg-gray-700 text-white'>Available</th>
+              <th className='bg-gray-700 text-white'>Update/Remove</th>
             </tr>
           </thead>
           <tbody>

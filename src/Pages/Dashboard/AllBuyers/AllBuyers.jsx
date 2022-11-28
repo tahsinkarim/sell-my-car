@@ -2,43 +2,69 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { Audio } from "react-loader-spinner";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import ConfirmationModal from "../../Shared/ConfirmationModal/ConfirmationModal";
 
 const AllBuyers = () => {
   const { user } = useContext(AuthContext);
   const [deleteItem, setDeleteItem] = useState();
-  const { data: allBuyers = [], refetch } = useQuery({
+  const {
+    data: allBuyers = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: [user],
     queryFn: async () => {
-      const { data } = await axios.get("http://localhost:5000/users/buyers", {
-        headers: {
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const { data } = await axios.get(
+        "https://sell-my-car-server.vercel.app/users/buyers",
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
       return data;
     },
   });
 
   const handleDelete = (email) => {
-    axios.delete(`http://localhost:5000/users/${email}`).then((data) => {
-      console.log(data);
-      toast.success("Item Deleted");
-      refetch();
-    });
+    axios
+      .delete(`https://sell-my-car-server.vercel.app/users/${email}`)
+      .then((data) => {
+        console.log(data);
+        toast.success("Item Deleted");
+        refetch();
+      });
   };
 
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <Audio
+          height='80'
+          width='80'
+          radius='9'
+          color='purple'
+          ariaLabel='three-dots-loading'
+          wrapperStyle
+          wrapperClass
+        />
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <div className='max-w-6xl mx-auto'>
       <h2 className='mt-4 mb-6 text-3xl font-semibold pl-2'>All Buyers</h2>
       <div className='overflow-x-auto'>
         <table className='table w-full'>
           <thead>
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Remove</th>
+              <th className='bg-gray-700 text-white'></th>
+              <th className='bg-gray-700 text-white'>Name</th>
+              <th className='bg-gray-700 text-white'>Email</th>
+              <th className='bg-gray-700 text-white'>Remove</th>
             </tr>
           </thead>
           <tbody>

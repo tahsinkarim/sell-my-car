@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import logo from "../../../assets/images/logo.jpg";
 import { AuthContext } from "../../../contexts/AuthProvider";
 
 const Navbar = () => {
@@ -14,23 +15,31 @@ const Navbar = () => {
   const menuItems = (
     <React.Fragment>
       <li>
-        <Link to='/'>Home</Link>
+        <Link className='rounded' to='/'>
+          Home
+        </Link>
       </li>
       <li>
-        <Link to='/'>All Cars</Link>
+        <Link className='rounded' to='/'>
+          All Cars
+        </Link>
       </li>
       <li>
-        <Link to='/blog'>Blog</Link>
+        <Link className='rounded' to='/blog'>
+          Blog
+        </Link>
       </li>
       {user?.email ? (
         <>
           <li>
-            <Link to='/dashboard'>Dashboard</Link>
+            <Link className='rounded mr-1' to='/dashboard'>
+              Dashboard
+            </Link>
           </li>
           <li>
             <button
               onClick={handleLogout}
-              className='btn btn-primary text-white rounded'
+              className='btn btn-primary text-white rounded mb-1'
             >
               Logout
             </button>
@@ -50,12 +59,20 @@ const Navbar = () => {
     <nav className='bg-base-100 shadow'>
       <div className='navbar justify-between max-w-7xl mx-auto'>
         <div className='navbar-start'>
-          <Link to='/' className='btn btn-ghost normal-case text-xl'>
-            Logo
+          <Link
+            to='/'
+            className='btn btn-ghost normal-case text-xl flex items-center justify-center'
+          >
+            <p className='text-2xl font-bold'>SellMyCar</p>
+            <div>
+              <img className='w-10' src={logo} alt='' />
+            </div>
           </Link>
         </div>
         <div className='navbar-center hidden lg:flex'>
-          <ul className='menu menu-horizontal p-0'>{menuItems}</ul>
+          <ul className='menu menu-horizontal p-0 font-semibold'>
+            {menuItems}
+          </ul>
         </div>
         <div className='navbar-end lg:hidden'>
           <div className='dropdown'>
@@ -77,7 +94,7 @@ const Navbar = () => {
             </label>
             <ul
               tabIndex={0}
-              className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 -left-40'
+              className='menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 -left-40 font-semibold'
             >
               {menuItems}
             </ul>

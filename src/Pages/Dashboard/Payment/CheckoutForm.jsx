@@ -14,7 +14,7 @@ const CheckoutForm = ({ order }) => {
 
   useEffect(() => {
     // Creating PaymentIntent when the page loads
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://sell-my-car-server.vercel.app/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const CheckoutForm = ({ order }) => {
         orderId: _id,
       };
 
-      fetch("http://localhost:5000/payments", {
+      fetch("https://sell-my-car-server.vercel.app/payments", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -91,16 +91,19 @@ const CheckoutForm = ({ order }) => {
           console.log(data);
           if (data.insertedId) {
             //Update product to sold
-            fetch(`http://localhost:5000/availableCars/${carId}`, {
-              method: "PUT",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify({
-                available: false,
-                advertise: false,
-              }),
-            }).then((data) => {
+            fetch(
+              `https://sell-my-car-server.vercel.app/availableCars/${carId}`,
+              {
+                method: "PUT",
+                headers: {
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                  available: false,
+                  advertise: false,
+                }),
+              }
+            ).then((data) => {
               console.log(data);
               setSuccess("Congrats! your payment completed");
               setTransactionId(paymentIntent.id);
@@ -113,7 +116,7 @@ const CheckoutForm = ({ order }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className='max-w-2xl' onSubmit={handleSubmit}>
         <CardElement
           options={{
             style: {

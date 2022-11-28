@@ -10,7 +10,7 @@ const DashboardLayout = () => {
   return (
     <>
       <Navbar></Navbar>
-      <div className='drawer-content flex flex-col items-end mr-4 my-4'>
+      <div className='drawer-content flex flex-col items-end mr-4 bg-base-200 py-2 lg:py-0'>
         <label
           htmlFor='dashboardSideBar'
           className='btn btn-primary btn-sm drawer-button lg:hidden'

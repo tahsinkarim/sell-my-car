@@ -5,7 +5,7 @@ const Order = ({ order, index }) => {
   const [carData, setCarData] = useState();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/availableCars/${order?.carId}`)
+    fetch(`https://sell-my-car-server.vercel.app/availableCars/${order?.carId}`)
       .then((res) => res.json())
       .then((data) => {
         setCarData(data);
@@ -16,6 +16,15 @@ const Order = ({ order, index }) => {
     <tr>
       <th>{index + 1}</th>
       <td>{order.carName}</td>
+      <td>
+        {order?.img && (
+          <div className='avatar'>
+            <div className='w-16 rounded'>
+              <img className='' src={order.img} alt='' />
+            </div>
+          </div>
+        )}
+      </td>
       <td>{order.price}</td>
       <td>{order.meetingLocation}</td>
       {carData?.available ? (

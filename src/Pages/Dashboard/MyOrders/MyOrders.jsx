@@ -2,16 +2,21 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { Audio } from "react-loader-spinner";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import Order from "./Order";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
-  const { data: myOrders = [], refetch } = useQuery({
+  const {
+    data: myOrders = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: [user.email],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/orders/?email=${user.email}`,
+        `https://sell-my-car-server.vercel.app/orders/?email=${user.email}`,
         {
           headers: {
             authorization: `bearer ${localStorage.getItem("accessToken")}`,
@@ -23,7 +28,7 @@ const MyOrders = () => {
   });
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/orders/${id}`, {
+    fetch(`https://sell-my-car-server.vercel.app/orders/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -34,18 +39,34 @@ const MyOrders = () => {
         }
       });
   };
+  if (isLoading) {
+    return (
+      <div className='flex justify-center items-center min-h-[70vh]'>
+        <Audio
+          height='80'
+          width='80'
+          radius='9'
+          color='purple'
+          ariaLabel='three-dots-loading'
+          wrapperStyle
+          wrapperClass
+        />
+      </div>
+    );
+  }
 
   return (
-    <div className='overflow-x-auto'>
+    <div className='overflow-x-auto max-w-6xl mx-auto'>
       <table className='table w-full'>
         <thead>
           <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Location</th>
-            <th>Buy</th>
-            <th>Remove</th>
+            <th className='bg-gray-700 text-white'></th>
+            <th className='bg-gray-700 text-white'>Item</th>
+            <th className='bg-gray-700 text-white'>Image</th>
+            <th className='bg-gray-700 text-white'>Price</th>
+            <th className='bg-gray-700 text-white'>Location</th>
+            <th className='bg-gray-700 text-white'>Buy</th>
+            <th className='bg-gray-700 text-white'>Remove</th>
           </tr>
         </thead>
         <tbody>

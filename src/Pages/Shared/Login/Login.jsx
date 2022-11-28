@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import loginImg from "../../../assets/images/login.jpg";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import useToken from "../../../hooks/useToken";
 import GoogleLogin from "./GoogleLogin";
@@ -40,11 +41,15 @@ const Login = () => {
   };
 
   return (
-    <div className='flex justify-center py-8'>
-      <div>
+    <div className='flex justify-center max-w-7xl mx-auto min-h-[70vh] mt-1 px-4'>
+      <div className='hidden sm:flex sm:w-1/2 justify-center'>
+        <img className='w-full object-contain' src={loginImg} alt='' />
+      </div>
+      <div className='w-full py-10 sm:py-0 sm:w-1/2 flex flex-col justify-center items-center'>
+        <h2 className='text-3xl mb-8 font-bold'>Welcome Back!</h2>
         <form
           onSubmit={handleSubmit(handleRegister)}
-          className='flex flex-col gap-4'
+          className='flex flex-col gap-4 w-full items-center'
         >
           {loginError && (
             <div className='alert alert-error shadow-lg rounded py-2'>
@@ -86,7 +91,7 @@ const Login = () => {
         </form>
         <Link to='/register'>
           <p className='text-sm mt-1 text-center text-gray-500 font-medium hover:underline'>
-            Already have a account? Sign Up
+            Don't have a account? Sign Up
           </p>
         </Link>
         <GoogleLogin></GoogleLogin>
