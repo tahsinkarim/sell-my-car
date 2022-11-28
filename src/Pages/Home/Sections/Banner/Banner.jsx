@@ -16,7 +16,7 @@ const Banner = () => {
             Buy or sell a car from <br /> your happy place.
           </h1>
           <Link to='/register' className='btn btn-primary'>
-            Get Started
+            Register now
           </Link>
         </div>
       </div>
