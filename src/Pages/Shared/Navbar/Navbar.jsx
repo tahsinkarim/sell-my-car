@@ -58,7 +58,7 @@ const Navbar = () => {
             to='/'
             className='btn btn-ghost normal-case text-xl flex items-center justify-center'
           >
-            <p className='text-2xl font-bold'>SellMyCar</p>
+            <p className='text-3xl font-bold text-orange-600'>SellMyCar</p>
             <div>
               <img className='w-10 pt-2 ml-1' src={logo} alt='' />
             </div>
