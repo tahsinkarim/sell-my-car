@@ -106,7 +106,7 @@ const Banner = () => {
           </div>
         </div>
       </div>
-      <div className='md:hidden mx-4 flex flex-col gap-2 mt-8'>
+      <div className='md:hidden mx-4 flex flex-col gap-2 mt-8 relative z-10'>
         <button className='btn btn-primary rounded-full h-0 min-h-[40px] text-white'>
           Shop New Car
         </button>
